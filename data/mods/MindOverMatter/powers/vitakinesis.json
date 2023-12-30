@@ -559,7 +559,7 @@
     "id": "vita_banish_illness",
     "type": "SPELL",
     "name": "[Ψ]Banish Illness",
-    "description": "Enter a deep meditative trance and purge your body of illness, even serious ones like cancer or multiple sclerosis.  It will not cure mutation.  Some illnesses are more difficult to successfully eradicate than others.",
+    "description": "Enter a deep meditative trance and purge your body of illness, even serious ones.  It will not cure mutation.  Some illnesses are more difficult to successfully eradicate than others.",
     "message": "You attempt to cure your afflictions.",
     "teachable": false,
     "valid_targets": [ "self" ],
