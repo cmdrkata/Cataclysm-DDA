@@ -54,6 +54,10 @@ struct itype;
 const invlet_wrapper
 inv_chars( "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!\"#&()+.:;=@[\\]^_{|}" );
 
+// Full inventory set with h/j/k/l removed for auto-assign blacklisting
+const invlet_wrapper
+inv_chars_no_vi("abcdefgimnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!\"#&()*+./:;=@[\\]^_{|}");
+
 bool invlet_wrapper::valid( const int invlet ) const
 {
     if( invlet > std::numeric_limits<char>::max() || invlet < std::numeric_limits<char>::min() ) {
@@ -995,6 +999,11 @@ void inventory::assign_empty_invlet( item &it, const Character &p, const bool fo
         return;
     }
 
+    const invlet_wrapper *filtered_inv_chars = &inv_chars;
+    if( get_option<bool>( "AUTO_INV_NO_HJKL" ) ) {
+        filtered_inv_chars = &inv_chars_no_vi;
+    }
+
     invlets_bitset cur_inv = p.allocated_invlets();
     itype_id target_type = it.typeId();
     for( const auto &iter : assigned_invlet ) {
@@ -1003,12 +1012,12 @@ void inventory::assign_empty_invlet( item &it, const Character &p, const bool fo
             return;
         }
     }
-    if( cur_inv.count() < inv_chars.size() ) {
+    if( cur_inv.count() < filtered_inv_chars->size() ) {
         // XXX YUCK I don't know how else to get the keybindings
         // FIXME: Find a better way to get bound keys
         inventory_selector selector( get_avatar() );
 
-        for( const char &inv_char : inv_chars ) {
+        for( const char &inv_char : *filtered_inv_chars ) {
             if( assigned_invlet.count( inv_char ) ) {
                 // don't overwrite assigned keys
                 continue;

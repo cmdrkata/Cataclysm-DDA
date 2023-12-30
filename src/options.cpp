@@ -2107,6 +2107,11 @@ void options_manager::add_options_interface()
         },
         "favorites" );
 
+	add("AUTO_INV_NO_HJKL", "interface", to_translation("Never auto assign vi-keys"),
+        to_translation("If true, vi direction keys (h/j/k/l) will not be auto assigned to inventory."),
+        false
+        );
+
         add( "ITEM_HEALTH", "interface", to_translation( "Show item health" ),
              // NOLINTNEXTLINE(cata-text-style): one space after "etc."
         to_translation( "Show item health bars, descriptions like reinforced, scratched etc. or both." ), {
